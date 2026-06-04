@@ -1,3 +1,4 @@
+import { Button } from '#components/ui/button';
 import React from 'react'
 import { useState,useEffect } from 'react'
 
@@ -12,10 +13,13 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <h1>My App</h1>
+    <>
+    <div className='p-4'>
+      <h1 className='text-2xl text-red-600' >My App</h1>
       <p>{message}</p>
+      <Button>Click  Me </Button>
     </div>
+    </>
   )
 }
 
