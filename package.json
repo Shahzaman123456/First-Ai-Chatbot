@@ -2,14 +2,18 @@
   "name": "my-app",
   "module": "index.ts",
   "type": "module",
+   "scripts": {
+  "dev": "concurrently -n server,client \"bun --watch pakages/server/index.ts\" \"bunx --bun vite pakages/client\""
+},
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "concurrently": "^10.0.3"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
-  "workspaces":[
-    "pakage/*"
+  "workspaces": [
+    "pakages/*"
   ]
 }

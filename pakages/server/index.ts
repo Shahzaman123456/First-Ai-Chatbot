@@ -1,22 +1,26 @@
 import express from "express";
-import type  { Request,Response } from "express";
-import dotenv from 'dotenv'
+import type { Request, Response } from "express";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const app=express();
-const PORT = process.env.PORT || 3000;
+const app = express();
+const PORT = Number(process.env.PORT) || 3000;
 
+app.use(express.json()); 
 
-app.get("/",(req:Request,res:Response)=>{
+app.get("/", (_req: Request, res: Response) => {
     res.send("Hello World!");
 });
 
-
-app.get("/api/hello",(req:Request,res:Response)=>{
-    res.json({message:"Hello from the API!"});
+app.get("/api/hello", (_req: Request, res: Response) => {
+    res.json({ message: "Hello from the API!" });
 });
 
-app.listen(PORT,()=>{
-    console.log(`Server is running on port http://localhost:${PORT}`);
-}); 
+app.use((_req: Request, res: Response) => {
+    res.status(404).json({ error: "Route not found" });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});
