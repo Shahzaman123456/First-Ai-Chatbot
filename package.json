@@ -1,19 +1,21 @@
 {
-  "name": "my-app",
-  "module": "index.ts",
-  "type": "module",
+   "name": "my-app",
+   "module": "index.ts",
+   "type": "module",
    "scripts": {
-  "dev": "concurrently -n server,client \"bun --watch pakages/server/index.ts\" \"bunx --bun vite pakages/client\""
-},
-  "private": true,
-  "devDependencies": {
-    "@types/bun": "latest",
-    "concurrently": "^10.0.3"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "workspaces": [
-    "pakages/*"
-  ]
+      "dev": "concurrently -n server,client \"bun --watch pakages/server/index.ts\" \"bunx --bun vite pakages/client\"",
+      "format": "prettier --write ."
+   },
+   "private": true,
+   "devDependencies": {
+      "@types/bun": "latest",
+      "concurrently": "^10.0.3",
+      "prettier": "^3.8.3"
+   },
+   "peerDependencies": {
+      "typescript": "^5"
+   },
+   "workspaces": [
+      "pakages/*"
+   ]
 }
