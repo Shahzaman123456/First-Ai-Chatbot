@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -n server,client \"bun --watch pakages/server/index.ts\" \"bunx --bun vite pakages/client\"",
+    "dev": "concurrently -n server,client \"cd pakages/server && bun --watch index.ts\" \"cd pakages/client && bun run dev\"",
     "format": "prettier --write .",
     "prepare": "husky"
   },

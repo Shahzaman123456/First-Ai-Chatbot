@@ -1,25 +1,13 @@
 import express from 'express';
-import type { Request, Response } from 'express';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'; // For loading environment variables
+import router from './routes';
 
-dotenv.config();
+dotenv.config({ path: './pakages/server/.env' });
 
 const app = express();
-const PORT = Number(process.env.PORT) || 3000;
-
 app.use(express.json());
-
-app.get('/', (_req: Request, res: Response) => {
-   res.send('Hello World!');
-});
-
-app.get('/api/hello', (_req: Request, res: Response) => {
-   res.json({ message: 'Hello from the API!' });
-});
-
-app.use((_req: Request, res: Response) => {
-   res.status(404).json({ error: 'Route not found' });
-});
+app.use(router);
+const PORT = Number(process.env.PORT) || 3000;
 
 app.listen(PORT, () => {
    console.log(`Server running at http://localhost:${PORT}`);
