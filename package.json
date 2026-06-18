@@ -20,5 +20,8 @@
   },
   "workspaces": [
     "pakages/*"
-  ]
+  ],
+  "dependencies": {
+    "@prisma/client": "^7.8.0"
+  }
 }

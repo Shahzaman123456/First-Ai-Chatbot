@@ -1,10 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import Groq from 'groq-sdk';
 import conversationRepository from '../repositories/conversation.repositories';
 import template from '../prompts/chatbot.txt';
-
-const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
+import { llmClient } from '../llm/client';
 
 const parkInfo = fs.readFileSync(
    path.join(__dirname, '..', 'prompts', 'WonderWorld.md'),
@@ -24,20 +22,17 @@ export async function chat(
    const history = conversationRepository.get(conversationId);
    history.push({ role: 'user', content: prompt });
 
-   const response = await client.chat.completions.create({
+   const response = await llmClient.generateText({
       model: 'llama-3.3-70b-versatile',
-      messages: [
-         { role: 'system', content: instruction }, // ✅ system prompt here
-         ...history,
-      ],
+      messages: [{ role: 'system', content: instruction }, ...history],
       temperature: 0.7,
    });
 
-   const message = response.choices[0]!.message.content!;
-   history.push({ role: 'assistant', content: message });
+   const message = response;
+   history.push({ role: 'assistant', content: message.text });
 
    return {
       id: conversationId,
-      message,
+      message: message.text,
    };
 }
