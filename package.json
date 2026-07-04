@@ -22,6 +22,8 @@
     "pakages/*"
   ],
   "dependencies": {
-    "@prisma/client": "^7.8.0"
+    "@huggingface/inference": "^4.13.19",
+    "@prisma/client": "^7.8.0",
+    "ollama": "^0.6.3"
   }
 }

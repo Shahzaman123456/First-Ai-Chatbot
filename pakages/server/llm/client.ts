@@ -1,6 +1,12 @@
+import { Ollama } from 'ollama';
 import { Groq } from 'groq-sdk';
+import { InferenceClient } from '@huggingface/inference';
+import summarizePrompt from '../llm/prompts/summarize-reviews.txt';
 
-const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const grokAIClient = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const indernceClient = new InferenceClient(process.env.HF_TOKEN);
+
+const ollamaClient = new Ollama();
 
 type Message = {
    role: 'user' | 'assistant' | 'system';
@@ -31,7 +37,7 @@ export const llmClient = {
       const finalMessages: Message[] = messages ?? [
          { role: 'user', content: prompt! },
       ];
-      const response = await client.chat.completions.create({
+      const response = await grokAIClient.chat.completions.create({
          model,
          messages: finalMessages,
          temperature,
@@ -41,5 +47,23 @@ export const llmClient = {
          id: response.id,
          text: response.choices[0]?.message?.content ?? '',
       };
+   },
+
+   async summarizeReviews(reviews: string) {
+      const response = await ollamaClient.chat({
+         model: 'tinyllama',
+         messages: [
+            {
+               role: 'system',
+               content: summarizePrompt,
+            },
+            {
+               role: 'user',
+               content: reviews,
+            },
+         ],
+      });
+
+      return response.message.content;
    },
 };
